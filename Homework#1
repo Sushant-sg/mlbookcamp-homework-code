@@ -1,0 +1,59 @@
+
+import pandas as pd
+import numpy as np
+
+Question 1: Version of NumPy *
+print(np.__version__)
+o/p:- 1.23.0
+
+df=pd.read_csv(r'C:\Users\user\Desktop\data.csv')
+
+Question 2: Number of records in the dataset *  ----check 
+df.count()
+
+o/p:-11914
+
+Question 3: The most popular car manufacturers *
+df['Make'].value_counts()[:3].index.tolist()
+
+o/p:-['Chevrolet', 'Ford', 'Volkswagen']
+
+Question 4: Number of unique Audi car models *
+df[df.Make == 'Audi'].nunique()
+
+o/p:- Model                 34
+
+Question 5: Number of columns with missing values *
+df.isnull().sum()
+
+o/p:- 5
+
+missing 
+Engine Fuel Type        3
+Engine HP              69
+Engine Cylinders       30
+Number of Doors         6
+Market Category      3742
+
+Question 6: Does the median value change after filling missing values
+
+df['Engine Cylinders'].median()
+df['Engine Cylinders'].value_counts().idxmax()
+df['Engine Cylinders'].fillna(df['Engine Cylinders'].value_counts().idxmax())
+df['Engine Cylinders'].median()
+
+o/p:-median 6.0   (didnt change after filling the missing values with most frequent value of engine cylinders)
+
+Questions 7: Value of the first element of w *
+
+df2=df.query("Make == 'Lotus'")
+df3=df2[['Engine HP','Engine Cylinders']].drop_duplicates()
+df3.head()##9 rows
+X=df3.to_numpy(dtype='float64')
+XTX=X.T.dot(X) 
+XTX_invert=np.linalg.inv(XTX)
+y=np.array([1100, 800, 750, 850, 1300, 1000, 1000, 1300, 800])
+w=XTX_invert.dot(X.T).dot(y)
+print('w',w)
+
+o/p:-4.59494481
